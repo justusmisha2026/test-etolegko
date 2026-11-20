@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adrobot · Кампании Keitaro</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/">adrobot<span> / keitaro</span></a><span id="mode" class="badge">Загрузка…</span></header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">Управление трафиком</p><h1>Кампании под контролем</h1><p>Создавайте маршруты и управляйте офферами в одном месте.</p></div><button id="reload" class="secondary">Обновить данные</button></div>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <div id="configuration" class="banner" hidden></div>
+    <nav aria-label="Разделы"><button class="tab selected" data-panel="create">Новая кампания</button><button class="tab" data-panel="editor">Редактор офферов</button><button class="tab" data-panel="operations">Журнал операций</button></nav>
+    <section id="create" class="panel">
+      <div class="grid">
+        <form id="create-form" class="card">
+          <h2>Параметры кампании</h2><p class="muted" id="prefix-hint"></p>
+          <label>Название<input name="name" required maxlength="150" placeholder="Например: Australia · November"></label>
+          <div class="two"><label>Страна<select name="country" required><option value="">Выберите страну</option></select></label><label>Оффер<select name="offer_id" required></select></label></div>
+          <label>Домен<select name="domain_id" required></select></label>
+          <div class="two"><label>Группа<select name="group_id" required></select></label><label>Источник<select name="traffic_source_id" required></select></label></div>
+          <button id="create-submit" type="submit">Создать кампанию</button>
+          <p class="muted small">Дождитесь результата. Повторная отправка этой формы использует тот же ключ операции.</p>
+          <button id="new-operation" class="secondary" type="button" hidden>Начать новую операцию</button>
+        </form>
+        <aside class="card route"><p class="eyebrow">Как пойдёт трафик</p><h2>Два потока. Один маршрут.</h2><div class="route-item"><span class="number">01</span><div><h3>Выбранная страна → Google</h3><p>Приоритетный поток с геофильтром.</p></div></div><div class="route-line"></div><div class="route-item"><span class="number">02</span><div><h3>Остальной трафик → оффер</h3><p>Замыкающий поток без геофильтра.</p></div></div><div class="route-note">Кампания активируется после проверки обоих потоков и выбранных привязок.</div></aside>
+      </div>
+    </section>
+    <section id="editor" class="panel" hidden>
+      <div class="card"><div class="two"><label>Кампания<select id="campaign-select"><option value="">Выберите кампанию</option></select></label><label>Поток<select id="stream-select" disabled><option value="">Сначала выберите кампанию</option></select></label></div><p id="editor-hint" class="muted">Выберите кампанию для загрузки актуального состояния.</p>
+        <div id="offers-editor" hidden><div class="table-wrap"><table><thead><tr><th>Оффер</th><th>Состояние</th><th>Доля</th><th>Действие</th></tr></thead><tbody id="offer-rows"></tbody></table></div><div class="offer-actions"><select id="add-offer-select" aria-label="Оффер для добавления"></select><button id="add-offer" class="secondary">Добавить оффер</button></div><div class="save-row"><p id="share-total"></p><button id="save-offers">Сохранить изменения</button></div><p class="muted small">При изменении состава доли распределяются поровну. Остаток получают последние активные офферы. Изменения попадут в Keitaro только после сохранения.</p></div>
+      </div>
+    </section>
+    <section id="operations" class="panel" hidden><div class="card"><h2>Последние операции создания</h2><p class="muted">При неполном результате сверьте состояние. Сверка только читает Keitaro и не повторяет запись.</p><div id="operation-list"></div></div></section>
+  </main>
+  <footer>Adrobot · Тестовое задание <span>Keitaro — источник состояния кампаний</span></footer>
+</body>
+</html>

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adrobot-keitaro"
+version = "0.1.0"
+description = "Local campaign management for Keitaro"
+requires-python = ">=3.12"
+dependencies = ["fastapi", "sqlalchemy", "alembic", "httpx", "pydantic-settings", "uvicorn", "pycountry"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio", "ruff"]
+
+[tool.setuptools.packages.find]
+include = ["adrobot*"]
+
+[tool.setuptools.package-data]
+adrobot = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
