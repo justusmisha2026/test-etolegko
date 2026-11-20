@@ -1,0 +1,52 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ADROBOT_DEMO: "true"
+      ADROBOT_API_KEY: ""
+      ADROBOT_WRITES_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: |
+            requirements.lock
+            requirements-e2e.lock
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: python -m pip install -r requirements-e2e.lock
+      - name: Install Chromium
+        run: python -m playwright install --with-deps chromium
+      - name: Lint and formatting
+        run: |
+          ruff check adrobot tests migrations e2e
+          ruff format --check adrobot tests migrations e2e
+      - name: Python tests
+        run: python -m pytest -q tests
+      - name: Frontend handler tests
+        run: node --test tests/frontend.test.cjs
+      - name: Chromium E2E
+        run: python -m pytest -q e2e --browser chromium --tracing retain-on-failure --screenshot only-on-failure
+      - name: Upload failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-failure-diagnostics
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7

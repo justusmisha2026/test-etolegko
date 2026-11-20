@@ -11,6 +11,7 @@ dependencies = ["fastapi", "sqlalchemy", "alembic", "httpx", "pydantic-settings"
 
 [project.optional-dependencies]
 dev = ["pytest", "pytest-asyncio", "ruff"]
+e2e = ["pytest-playwright"]
 
 [tool.setuptools.packages.find]
 include = ["adrobot*"]
