@@ -1,0 +1,34 @@
+{
+  "au": {
+    "country": "AU",
+    "unique_in_campaign": "yes",
+    "unique_in_stream": "yes",
+    "route": "Google",
+    "action": "http",
+    "saved_simulated_clicks": 1
+  },
+  "other": {
+    "country": "US",
+    "unique_in_campaign": "yes",
+    "unique_in_stream": "yes",
+    "route": "Configured offer",
+    "action": "local_file",
+    "saved_simulated_clicks": 1
+  },
+  "unknown": {
+    "country": null,
+    "unique_in_campaign": "yes",
+    "unique_in_stream": "yes",
+    "route": "Configured offer",
+    "action": "local_file",
+    "saved_simulated_clicks": 1
+  },
+  "repeat": {
+    "country": "AU",
+    "unique_in_campaign": "no",
+    "unique_in_stream": "no",
+    "route": "Google",
+    "action": "http",
+    "saved_simulated_clicks": 1
+  }
+}
